@@ -49,7 +49,7 @@ def read_nc_file(fname):
     #sys.exit()
 
 
-    return (dates, VPD_day, Tair_day, VPD_day, SW_day,
+    return (dates, VPD_day, Tair_day, Tair_night, VPD_day, SW_day,
             Reco_day, Reco_night, NEE_day)
 
 
@@ -59,7 +59,8 @@ if __name__ == "__main__":
 
     fname = "data/Yanco_L6.nc"
     (dates, VPD_day,
-     Tair_day, VPD_day, SW_day,
+     Tair_day, Tair_night,
+     VPD_day, SW_day,
      Reco_day, Reco_night, NEE_day) = read_nc_file(fname)
 
     fig = plt.figure(figsize=(8,10))
