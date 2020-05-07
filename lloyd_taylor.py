@@ -35,8 +35,8 @@ def Resp_Lloyd_Taylor(Tair, rb, E0):
 
     Reference:
     ----------
-    * Lloyd J, Taylor JA (1994) On the temperature dependence of soil respiration.
-      Functional Ecology, 8, 315–323.
+    * Lloyd J, Taylor JA (1994) On the temperature dependence of soil
+      respiration. Functional Ecology, 8, 315–323.
 
     Returns:
     --------
