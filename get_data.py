@@ -38,7 +38,7 @@ def read_nc_file(fname):
     dates = ds.time
 
     # Screen some bad data - Peter makes a good argument about this messing
-    #
+    # with the error statistics. Will do this for now.
     VPD_day = np.ma.masked_where(VPD_day < 0.0, VPD_day)
     Reco_day = np.ma.masked_where(Reco_day < -100.0, Reco_day)
     Reco_night = np.ma.masked_where(Reco_night < -100.0, Reco_night)
