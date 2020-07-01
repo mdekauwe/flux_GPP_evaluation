@@ -1,0 +1,2 @@
+- add RMSE of fit
+- fit all sites, save results
