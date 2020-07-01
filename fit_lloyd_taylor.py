@@ -81,7 +81,7 @@ def fit_all_dates(sites):
         #plt.plot(Tair_m, Resp_Lloyd_Taylor(Tair_m, rb, E0))
         #plt.show()
 
-        return dfa
+    return dfa
 
 def fit_individual_years(sites):
 
@@ -132,15 +132,17 @@ def fit_individual_years(sites):
                 pred = Resp_Lloyd_Taylor(Tair_m, rb, E0)
                 rms = rmse(pred, Reco_m)
 
-                dfy.loc[len(dfy), :] = [site, year, result.params['rb'].value, \
-                                       result.params['rb'].stderr, \
-                                       result.params['E0'].value,\
-                                       result.params['E0'].stderr, rms]
+                dfy.loc[cnt, :] = [site, year, \
+                                   result.params['rb'].value, \
+                                   result.params['rb'].stderr, \
+                                   result.params['E0'].value,\
+                                   result.params['E0'].stderr, \
+                                   rms]
 
             else:
                 # Not enough data to fit
-                dfy.loc[j,"site"] = site
-                dfy.loc[j,"dates"] = "%s" % (year)
+                dfy.loc[cnt, :] = [site, year, -999.9, -999.9, -999.9,\
+                                   -999.9, -999.9]
 
             cnt += 1
 
@@ -169,5 +171,5 @@ if __name__ == "__main__":
 
     fdir = "data"
     output_dir = "outputs"
-    sites = ["Whroo"]
+    sites = ["Whroo","Tumbarumba"]
     main(fdir, sites, output_dir)
