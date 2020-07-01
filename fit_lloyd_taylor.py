@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-Blah
+Fit rb and E0 of the Lloyd Taylor func using night-time Reco flux data
 
 That's all folks.
 """
