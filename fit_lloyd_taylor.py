@@ -92,10 +92,6 @@ def fit_all_dates(sites):
                                 result.params['E0'].value,\
                                 result.params['E0'].stderr, rms]
 
-        #plt.plot(Tair_m, Reco_m, "k.")
-        #plt.plot(Tair_m, Resp_Lloyd_Taylor(Tair_m, rb, E0))
-        #plt.show()
-
     return dfa
 
 def fit_individual_years(sites):
@@ -161,6 +157,48 @@ def fit_individual_years(sites):
                 E0 = result.params['E0'].value
                 pred = Resp_Lloyd_Taylor(Tair_m, rb, E0)
                 rms = rmse(pred, Reco_m)
+
+
+                fig = plt.figure(figsize=(9,6))
+                fig.subplots_adjust(hspace=0.1)
+                fig.subplots_adjust(wspace=0.05)
+                plt.rcParams['text.usetex'] = False
+                plt.rcParams['font.family'] = "sans-serif"
+                plt.rcParams['font.sans-serif'] = "Helvetica"
+                plt.rcParams['axes.labelsize'] = 12
+                plt.rcParams['font.size'] = 12
+                plt.rcParams['legend.fontsize'] = 12
+                plt.rcParams['xtick.labelsize'] = 12
+                plt.rcParams['ytick.labelsize'] = 12
+
+                almost_black = '#262626'
+                # change the tick colors also to the almost black
+                plt.rcParams['ytick.color'] = almost_black
+                plt.rcParams['xtick.color'] = almost_black
+
+                # change the text colors also to the almost black
+                plt.rcParams['text.color'] = almost_black
+
+                # Change the default axis colors from black to a slightly lighter black,
+                # and a little thinner (0.5 instead of 1)
+                plt.rcParams['axes.edgecolor'] = almost_black
+                plt.rcParams['axes.labelcolor'] = almost_black
+
+                ax = fig.add_subplot(111)
+                ax.plot(Tair_m, Reco_m, "k.")
+                ax.plot(Tair_m, pred)
+                ax.set_ylabel("R$_{eco}$ (\u03BCmol m$^{-2}$ s$^{-1}$)")
+                ax.set_xlabel("T$_{air}$ ($^{\circ}\mathrm{C}$)")
+
+                plot_dir = "plots"
+                if not os.path.exists(plot_dir):
+                    os.makedirs(plot_dir)
+
+                plt.savefig(os.path.join(plot_dir,
+                                         "%s_%s_Reco.pdf" % (osite, year)),
+                            bbox_inches='tight', pad_inches=0.1)
+
+
 
                 dfy.loc[cnt, :] = [site, osite, year, \
                                    result.params['rb'].value, \
