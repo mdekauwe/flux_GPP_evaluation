@@ -40,8 +40,8 @@ def fit_lt(Reco, Tair):
 if __name__ == "__main__":
 
     #fname = "data/Yanco_L6.nc"
-    fname = "data/Tumbarumba_L6.nc"
-    #fname = "data/Whroo_L6.nc"
+    #fname = "data/Tumbarumba_L6.nc"
+    fname = "data/Whroo_L6.nc"
 
     (dates, VPD_day,
      Tair_day, Tair_night,
@@ -78,14 +78,17 @@ if __name__ == "__main__":
     all_years = np.array(all_years)
     years = np.unique(all_years)
 
-
+    min_pts = 100
     for year in years[1:]:
         years_data = all_years[all_years == year]
         years_reco = Reco_m[all_years == year]
         years_tair = Tair_m[all_years == year]
 
-        result = fit_lt(years_reco, years_tair)
+        if len(years_data) > min_pts:
+            result = fit_lt(years_reco, years_tair)
 
-        for name, par in result.params.items():
-            print('%s: %s = %.8f +/- %.8f ' % (year, name, par.value, par.stderr))
-        print("\n")
+            for name, par in result.params.items():
+                print('%s: %s = %.8f +/- %.8f ' % (year, name, par.value, par.stderr))
+            print("\n")
+        else:
+            print("%s: Not enough data" % (year))
