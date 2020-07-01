@@ -14,9 +14,11 @@ import sys
 import urllib.request
 
 
-sites = ["Gingin", "GreatWesternWoodlands", "Calperum", "WombatStateForest", \
-         "Whroo", "CumberlandPlain", "Tumbarumba"]
+#sites = ["Gingin", "GreatWesternWoodlands", "Calperum", "WombatStateForest", \
+#         "Whroo", "CumberlandPlain", "Tumbarumba"]
 
+sites = ["AdelaideRiver", "DalyUncleared", "DryRiver", "HowardSprings", \
+         "SturtPlains"]
 
 for site in sites:
     print(site)

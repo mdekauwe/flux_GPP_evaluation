@@ -29,9 +29,10 @@ def main(fdir, sites, output_dir):
     dfa = fit_all_dates(sites)
     dfy = fit_individual_years(sites)
 
-    dfa.to_csv(os.path.join(output_dir, "LT_fits_all_timesteps.csv"), index=False)
-    dfy.to_csv(os.path.join(output_dir, "LT_fits_annual.csv"), index=False)
-
+    dfa.to_csv(os.path.join(output_dir, "LT_fits_all_timesteps_NATT.csv"), index=False)
+    dfy.to_csv(os.path.join(output_dir, "LT_fits_annual_NATT.csv"), index=False)
+    #dfa.to_csv(os.path.join(output_dir, "LT_fits_all_timesteps.csv"), index=False)
+    #dfy.to_csv(os.path.join(output_dir, "LT_fits_annual.csv"), index=False)
 
 def fit_all_dates(sites):
 
@@ -56,6 +57,16 @@ def fit_all_dates(sites):
             osite = "Au-Cum"
         elif site == "Tumbarumba":
             osite = "Au-Tum"
+        elif site == "AdelaideRiver":
+            osite = "Au-Ade"
+        elif site == "DalyUncleared":
+            osite = "Au-Dal"
+        elif site == "DryRiver":
+            osite = "Au-Dry"
+        elif site == "HowardSprings":
+            osite = "Au-How"
+        elif site == "SturtPlains":
+            osite = "Au-Stu"
 
         (dates, VPD_day,
          Tair_day, Tair_night,
@@ -122,6 +133,16 @@ def fit_individual_years(sites):
             osite = "Au-Cum"
         elif site == "Tumbarumba":
             osite = "Au-Tum"
+        elif site == "AdelaideRiver":
+            osite = "Au-Ade"
+        elif site == "DalyUncleared":
+            osite = "Au-Dal"
+        elif site == "DryRiver":
+            osite = "Au-Dry"
+        elif site == "HowardSprings":
+            osite = "Au-How"
+        elif site == "SturtPlains":
+            osite = "Au-Stu"
 
         (dates, VPD_day,
          Tair_day, Tair_night,
@@ -158,7 +179,7 @@ def fit_individual_years(sites):
                 pred = Resp_Lloyd_Taylor(Tair_m, rb, E0)
                 rms = rmse(pred, Reco_m)
 
-
+                """
                 fig = plt.figure(figsize=(9,6))
                 fig.subplots_adjust(hspace=0.1)
                 fig.subplots_adjust(wspace=0.05)
@@ -197,7 +218,7 @@ def fit_individual_years(sites):
                 plt.savefig(os.path.join(plot_dir,
                                          "%s_%s_Reco.pdf" % (osite, year)),
                             bbox_inches='tight', pad_inches=0.1)
-
+                """
 
 
                 dfy.loc[cnt, :] = [site, osite, year, \
@@ -239,6 +260,8 @@ if __name__ == "__main__":
 
     fdir = "data"
     output_dir = "outputs"
-    sites = ["Gingin", "GreatWesternWoodlands", "Calperum", \
-             "WombatStateForest", "Whroo", "CumberlandPlain", "Tumbarumba"]
+    #sites = ["Gingin", "GreatWesternWoodlands", "Calperum", \
+    #         "WombatStateForest", "Whroo", "CumberlandPlain", "Tumbarumba"]
+    sites = ["AdelaideRiver", "DalyUncleared", "DryRiver", "HowardSprings", \
+             "SturtPlains"]
     main(fdir, sites, output_dir)

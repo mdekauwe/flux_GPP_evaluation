@@ -20,7 +20,8 @@ import seaborn as sns
 
 def main():
 
-    fname = "outputs/LT_fits_annual.csv"
+    #fname = "outputs/LT_fits_annual.csv"
+    fname = "outputs/LT_fits_annual_NATT.csv"
     df = pd.read_csv(fname)
     df = df[df.rb > -500.]
 
@@ -68,7 +69,8 @@ def main():
     if not os.path.exists(plot_dir):
         os.makedirs(plot_dir)
 
-    plt.savefig(os.path.join(plot_dir, "rb.pdf"),
+    #plt.savefig(os.path.join(plot_dir, "rb_angry.pdf"),
+    plt.savefig(os.path.join(plot_dir, "rb_natt.pdf"),
                 bbox_inches='tight', pad_inches=0.1)
 
     sns.set_style("ticks")
@@ -111,12 +113,13 @@ def main():
     #ax.set_xticklabels(ax.get_xticklabels(),
     #                   rotation=45, horizontalalignment='right')
 
-    
+
     plot_dir = "plots"
     if not os.path.exists(plot_dir):
         os.makedirs(plot_dir)
 
-    plt.savefig(os.path.join(plot_dir, "E0.pdf"),
+    #plt.savefig(os.path.join(plot_dir, "E0_angry.pdf"),
+    plt.savefig(os.path.join(plot_dir, "E0_natt.pdf"),
                 bbox_inches='tight', pad_inches=0.1)
 
 if __name__ == "__main__":
