@@ -57,22 +57,25 @@ if __name__ == "__main__":
     rb = result.params['rb'].value
     E0 = result.params['E0'].value
 
+    # Fit all years
     for name, par in result.params.items():
         print('%s = %.8f +/- %.8f ' % (name, par.value, par.stderr))
     print("\n")
-    #plt.plot(Tair_m, Reco_m, "k.")
-    #plt.plot(Tair_m, Resp_Lloyd_Taylor(Tair_m, rb, E0))
-    #plt.show()
+    plt.plot(Tair_m, Reco_m, "k.")
+    plt.plot(Tair_m, Resp_Lloyd_Taylor(Tair_m, rb, E0))
+    plt.show()
 
+    # Fit individual years
+
+    # there is some weird issue with the time thing from the ozflux file,
+    # this hacky thing gets us back years we can manipulate
     all_years = []
     for i in dates_m:
         all_years.append(i.values.astype("str")[0:4])
     all_years = np.array(all_years)
-    #dates_m = pd.Series(dates_m)
-    #dates_m['year'] = dates_m.dt.year
     years = np.unique(all_years)
 
-    
+
     for year in years[1:]:
         years_data = all_years[all_years == year]
         years_reco = Reco_m[all_years == year]
