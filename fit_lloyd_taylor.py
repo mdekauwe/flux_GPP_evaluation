@@ -36,11 +36,26 @@ def main(fdir, sites, output_dir):
 def fit_all_dates(sites):
 
     # Save each year seperately
-    dfa = pd.DataFrame(columns=['site','dates','rb','rb_se',\
+    dfa = pd.DataFrame(columns=['site','osite','dates','rb','rb_se',\
                                 'E0','E0_se','rmse'])
 
     for j,site in enumerate(sites):
         fname = os.path.join(fdir, "%s_L6.nc" % (site))
+
+        if site == "Gingin":
+            osite = "Au-Gin"
+        elif site == "GreatWesternWoodlands":
+            osite = "Au-Gww"
+        elif site == "Calperum":
+            osite = "Au-Cal"
+        elif site == "Wombat":
+            osite = "Au-Wom"
+        elif site == "Whroo":
+            osite = "Au-Whr"
+        elif site == "CumberlandPlain":
+            osite = "Au-Cum"
+        elif site == "Tumbarumba":
+            osite = "Au-Tum"
 
         (dates, VPD_day,
          Tair_day, Tair_night,
@@ -70,7 +85,7 @@ def fit_all_dates(sites):
         pred = Resp_Lloyd_Taylor(Tair_m, rb, E0)
         rms = rmse(pred, Reco_m)
 
-        dfa.loc[len(dfa), :] = [site, \
+        dfa.loc[len(dfa), :] = [site, osite,\
                                 "%s_%s" % (years[0], years[-1]), \
                                 result.params['rb'].value, \
                                 result.params['rb'].stderr, \
@@ -89,13 +104,28 @@ def fit_individual_years(sites):
     min_pts = 100
 
     # Save each year seperately
-    dfy = pd.DataFrame(columns=['site','dates','rb','rb_se',\
+    dfy = pd.DataFrame(columns=['site','osite','dates','rb','rb_se',\
                                 'E0','E0_se','rmse'])
 
     cnt = 0
     for j,site in enumerate(sites):
 
         fname = os.path.join(fdir, "%s_L6.nc" % (site))
+
+        if site == "Gingin":
+            osite = "Au-Gin"
+        elif site == "GreatWesternWoodlands":
+            osite = "Au-Gww"
+        elif site == "Calperum":
+            osite = "Au-Cal"
+        elif site == "Wombat":
+            osite = "Au-Wom"
+        elif site == "Whroo":
+            osite = "Au-Whr"
+        elif site == "CumberlandPlain":
+            osite = "Au-Cum"
+        elif site == "Tumbarumba":
+            osite = "Au-Tum"
 
         (dates, VPD_day,
          Tair_day, Tair_night,
@@ -132,7 +162,7 @@ def fit_individual_years(sites):
                 pred = Resp_Lloyd_Taylor(Tair_m, rb, E0)
                 rms = rmse(pred, Reco_m)
 
-                dfy.loc[cnt, :] = [site, year, \
+                dfy.loc[cnt, :] = [site, osite, year, \
                                    result.params['rb'].value, \
                                    result.params['rb'].stderr, \
                                    result.params['E0'].value,\
@@ -141,7 +171,7 @@ def fit_individual_years(sites):
 
             else:
                 # Not enough data to fit
-                dfy.loc[cnt, :] = [site, year, -999.9, -999.9, -999.9,\
+                dfy.loc[cnt, :] = [site, osite, year, -999.9, -999.9, -999.9,\
                                    -999.9, -999.9]
 
             cnt += 1
