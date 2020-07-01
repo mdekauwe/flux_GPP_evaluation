@@ -58,7 +58,11 @@ def main():
     # define outlier properties
     flierprops = dict(marker='o', markersize=3, markerfacecolor="black")
     ax = sns.boxplot(x="osite", y="rb", data=df, palette="Set2",
-                     flierprops=flierprops)
+                     flierprops=flierprops, width=0.6)
+    #ax = sns.violinplot(x="osite", y="rb", data=df, palette="Set2",
+    #                   flierprops=flierprops)
+
+    ax.axhline(y=0.0, ls="--", color="lightgrey")
 
     ax.set_ylabel("rb (\u03BCmol C m$^{-2}$ s$^{-1}$)")
     ax.set_xlabel(" ")
@@ -72,9 +76,6 @@ def main():
     #plt.savefig(os.path.join(plot_dir, "rb_angry.pdf"),
     plt.savefig(os.path.join(plot_dir, "rb_natt.pdf"),
                 bbox_inches='tight', pad_inches=0.1)
-
-    sns.set_style("ticks")
-    sns.set_style({"xtick.direction": "in","ytick.direction": "in"})
 
     fig = plt.figure(figsize=(9,6))
     fig.subplots_adjust(hspace=0.1)
@@ -106,7 +107,11 @@ def main():
     # define outlier properties
     flierprops = dict(marker='o', markersize=3, markerfacecolor="black")
     ax = sns.boxplot(x="osite", y="E0", data=df, palette="Set2",
-                     flierprops=flierprops)
+                     flierprops=flierprops, width=0.6)
+    #ax = sns.violinplot(x="osite", y="E0", data=df, palette="Set2",
+    #                 flierprops=flierprops)
+    ax.axhline(y=50.0, ls="--", color="lightgrey")
+    ax.axhline(y=400.0, ls="--", color="lightgrey")
 
     ax.set_ylabel("E$_{0}$ ($^{\circ}\mathrm{C}$)")
     ax.set_xlabel(" ")

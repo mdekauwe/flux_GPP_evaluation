@@ -251,6 +251,7 @@ def fit_lt(Reco, Tair):
     params = Parameters()
     params.add('rb', value=2., min=0.0)
     params.add('E0', value=100., min=0.0)
+    #params.add('E0', value=100., min=50.0, max=400.0)
 
     result = minimize(residual, params, args=(Reco, Tair))
 
