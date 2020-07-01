@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 import sys
 
 
-def calculate_gpp_lasslop(alpha, k, D0, Fsd, D):
+def calculate_gpp_lasslop(alpha, beta0, k, D0, Fsd, D):
     """
     Arrhenius-type model of respiration
 
