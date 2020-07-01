@@ -171,5 +171,6 @@ if __name__ == "__main__":
 
     fdir = "data"
     output_dir = "outputs"
-    sites = ["Whroo","Tumbarumba"]
+    sites = ["Gingin", "GreatWesternWoodlands", "Calperum", \
+             "WombatStateForest", "Whroo", "CumberlandPlain", "Tumbarumba"]
     main(fdir, sites, output_dir)
