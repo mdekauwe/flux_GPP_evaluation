@@ -1,2 +1,4 @@
 data/*.nc
 *.nc
+__pycache__/*
+__pycache__

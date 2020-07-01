@@ -15,12 +15,27 @@ import matplotlib.pyplot as plt
 import sys
 from get_data import read_nc_file
 from lloyd_taylor import Resp_Lloyd_Taylor
+from lmfit import minimize, Parameters
+import pandas as pd
 
-def fit_lt(dates, Reco, Tair):
+def residual(params, obs, Tair):
+    rb = params['rb']
+    E0 = params['E0']
 
-    plt.plot(Reco)
-    plt.show()
-    sys.exit()
+    model = Resp_Lloyd_Taylor(Tair, rb, E0)
+
+    return (obs-model)
+
+
+def fit_lt(Reco, Tair):
+
+    params = Parameters()
+    params.add('rb', value=2., min=0.0)
+    params.add('E0', value=100., min=0.0)
+
+    result = minimize(residual, params, args=(Reco, Tair))
+
+    return result
 
 if __name__ == "__main__":
 
@@ -30,4 +45,41 @@ if __name__ == "__main__":
      VPD_day, SW_day,
      Reco_day, Reco_night, NEE_day) = read_nc_file(fname)
 
-    fit_lt(dates, Reco_night, Tair_night)
+    dates_m = dates[~Tair_night.mask]
+    Reco_m = Reco_night[~Tair_night.mask]
+    Tair_m = Tair_night[~Tair_night.mask]
+    Tair_m = Tair_m[~Reco_m.mask]
+    dates_m = dates_m[~Reco_m.mask]
+    Reco_m = Reco_m[~Reco_m.mask]
+
+    result = fit_lt(Reco_m, Tair_m)
+
+    rb = result.params['rb'].value
+    E0 = result.params['E0'].value
+
+    for name, par in result.params.items():
+        print('%s = %.8f +/- %.8f ' % (name, par.value, par.stderr))
+    print("\n")
+    #plt.plot(Tair_m, Reco_m, "k.")
+    #plt.plot(Tair_m, Resp_Lloyd_Taylor(Tair_m, rb, E0))
+    #plt.show()
+
+    all_years = []
+    for i in dates_m:
+        all_years.append(i.values.astype("str")[0:4])
+    all_years = np.array(all_years)
+    #dates_m = pd.Series(dates_m)
+    #dates_m['year'] = dates_m.dt.year
+    years = np.unique(all_years)
+
+    
+    for year in years[1:]:
+        years_data = all_years[all_years == year]
+        years_reco = Reco_m[all_years == year]
+        years_tair = Tair_m[all_years == year]
+
+        result = fit_lt(years_reco, years_tair)
+
+        for name, par in result.params.items():
+            print('%s: %s = %.8f +/- %.8f ' % (year, name, par.value, par.stderr))
+        print("\n")
