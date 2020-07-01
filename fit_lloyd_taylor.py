@@ -39,7 +39,10 @@ def fit_lt(Reco, Tair):
 
 if __name__ == "__main__":
 
-    fname = "data/Yanco_L6.nc"
+    #fname = "data/Yanco_L6.nc"
+    fname = "data/Tumbarumba_L6.nc"
+    #fname = "data/Whroo_L6.nc"
+
     (dates, VPD_day,
      Tair_day, Tair_night,
      VPD_day, SW_day,
